@@ -15,6 +15,7 @@ import * as util from './util';
 const root = path.dirname(path.dirname(__dirname));
 const product = JSON.parse(fs.readFileSync(path.join(root, 'product.json'), 'utf8'));
 const commit = util.getVersion(root);
+const buildArch = process.env['VSCODE_ARCH'];
 
 const darwinCreditsTemplate = product.darwinCredits && _.template(fs.readFileSync(path.join(root, product.darwinCredits), 'utf8'));
 
@@ -34,7 +35,7 @@ export const config = {
 	companyName: 'Microsoft Corporation',
 	copyright: 'Copyright (C) 2019 Microsoft. All rights reserved',
 	darwinIcon: 'resources/darwin/code.icns',
-	darwinBundleIdentifier: product.darwinBundleIdentifier,
+	darwinBundleIdentifier: buildArch === 'universal' ? product.darwinUniversalBundleIdentifier : product.darwinBundleIdentifier,
 	darwinApplicationCategoryType: 'public.app-category.developer-tools',
 	darwinHelpBookFolder: 'VS Code HelpBook',
 	darwinHelpBookName: 'VS Code HelpBook',
