@@ -5,6 +5,7 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 const vscode_universal_1 = require("vscode-universal");
+const fs = require("fs-extra");
 const path = require("path");
 const product = require("../../product.json");
 async function main() {
@@ -19,6 +20,7 @@ async function main() {
     const x64AsarPath = path.join(x64AppPath, 'Contents', 'Resources', 'app', 'node_modules.asar');
     const arm64AsarPath = path.join(arm64AppPath, 'Contents', 'Resources', 'app', 'node_modules.asar');
     const outAppPath = path.join(buildDir, `VSCode-darwin-${arch}`, appName);
+    const productJsonPath = path.resolve(outAppPath, 'Contents', 'Resources', 'app', 'product.json');
     await vscode_universal_1.makeUniversalApp({
         x64AppPath,
         arm64AppPath,
@@ -33,6 +35,11 @@ async function main() {
         outAppPath,
         force: true
     });
+    let productJson = await fs.readJson(productJsonPath);
+    Object.assign(productJson, {
+        darwinUniversalAssetId: 'darwin-universal'
+    });
+    await fs.writeJson(productJsonPath, productJson);
 }
 if (require.main === module) {
     main().catch(err => {

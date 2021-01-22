@@ -31,7 +31,7 @@ exports.config = {
     companyName: 'Microsoft Corporation',
     copyright: 'Copyright (C) 2019 Microsoft. All rights reserved',
     darwinIcon: 'resources/darwin/code.icns',
-    darwinBundleIdentifier: buildArch === 'universal' ? product.darwinUniversalBundleIdentifier : product.darwinBundleIdentifier,
+    darwinBundleIdentifier: product[`darwin${buildArch}BundleIdentifier`],
     darwinApplicationCategoryType: 'public.app-category.developer-tools',
     darwinHelpBookFolder: 'VS Code HelpBook',
     darwinHelpBookName: 'VS Code HelpBook',
