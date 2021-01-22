@@ -271,7 +271,7 @@ stages:
             variables:
               VSCODE_ARCH: universal
             steps:
-              - template: darwin/product-build-darwin-universal.yml
+              - template: darwin/product-build-darwin.yml
 
   - ${{ if and(eq(variables['VSCODE_PUBLISH'], true), eq(parameters.VSCODE_COMPILE_ONLY, false)) }}:
     - stage: Mooncake
